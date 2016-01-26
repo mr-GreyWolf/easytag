@@ -430,7 +430,7 @@ vcedit_open (EtOggState *state,
         {
             if(bytes<CHUNKSIZE)
                 g_set_error (error, ET_OGG_ERROR, ET_OGG_ERROR_TRUNC,
-                             "Input truncated or empty");
+                             _("Input truncated or empty"));
             else
                 g_set_error (error, ET_OGG_ERROR, ET_OGG_ERROR_NOTOGG,
                              "Input is not an Ogg bitstream");
