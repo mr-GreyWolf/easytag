@@ -1,0 +1,143 @@
+{
+    "id": "org.gnome.EasyTAG",
+    "version": "master",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.20",
+    "sdk": "org.gnome.Sdk",
+    "command": "easytag",
+    "rename-appdata-file": "easytag.appdata.xml",
+    "rename-desktop-file": "easytag.desktop",
+    "rename-icon": "easytag",
+    "finish-args": ["--filesystem=host",
+                    "--share=ipc",
+                    "--share=network",
+                    "--socket=x11",
+                    "--socket=wayland",
+                    "--socket=session-bus",
+                    "--filesystem=~/.config/dconf:ro",
+                    "--filesystem=xdg-run/dconf",
+                    "--talk-name=ca.desrt.dconf",
+                    "--env=DCONF_USER_CONFIG_DIR=.config/dconf"],
+    "cleanup": [ "/include", "/lib/pkgconfig", "/lib/*.a", "/lib/*.la" ],
+    "modules": [
+        {
+            "name": "id3lib",
+            "cleanup": [ "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/id3lib/id3lib-3.8.3.tar.gz",
+                    "sha256": "2749cc3c0cd7280b299518b1ddf5a5bcfe2d1100614519b68702230e26c7d079"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-autoreconf.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-io_helpers-163101.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-mkstemp.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-includes.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-vbr_buffer_overflow.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-missing-nullpointer-check.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "id3lib-3.8.3-fix-utf16-stringlists.patch"
+                }
+            ]
+        },
+        {
+            "name": "libid3tag",
+            "cleanup": [ "/bin" ],
+            "rm-configure": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/mad/libid3tag-0.15.1b.tar.gz",
+                    "sha256": "63da4f6e7997278f8a3fef4c6a372d342f705051d1eeb6a46a86b03610e26151"
+                },
+                {
+                    "type": "patch",
+                    "path": "libid3tag-0.15.1b-fix_overflow.patch",
+                    "strip-components": 0
+                },
+                {
+                    "type": "patch",
+                    "path": "libid3tag-0.15.1b-pkgconfig.patch"
+                },
+                {
+                    "type": "script",
+                    "commands": [ "autoreconf --force --install" ]
+                }
+            ]
+        },
+        {
+            "name": "opus",
+            "cleanup": [ "/share/aclocal" ],
+            "config-opts": [ "--disable-doc", "--disable-extra-programs" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/opus/opus-1.1.2.tar.gz",
+                    "sha256": "0e290078e31211baa7b5886bcc8ab6bc048b9fc83882532da4a1a45e58e907fd"
+                }
+            ]
+        },
+        {
+            "name": "opusfile",
+            "config-opts": [ "--disable-doc", "--disable-examples" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/opus/opusfile-0.7.tar.gz",
+                    "sha256": "9e2bed13bc729058591a0f1cab2505e8cfd8e7ac460bf10a78bcc3b125e7c301"
+                }
+            ]
+        },
+        {
+            "name": "taglib",
+            "cleanup": [ "/bin" ],
+            "cmake": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://taglib.github.io/releases/taglib-1.11.tar.gz",
+                    "sha256": "ed4cabb3d970ff9a30b2620071c2b054c4347f44fc63546dbe06f97980ece288"
+                }
+            ]
+        },
+        {
+            "name": "wavpack",
+            "cleanup": [ "/bin", "/share/man" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.wavpack.com/wavpack-4.80.0.tar.bz2",
+                    "sha256": "79182ea75f7bd1ca931ed230062b435fde4a4c2e0dbcad048007bd1ef1e66be9"
+                }
+            ]
+        },
+        {
+            "name": "easytag",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://git.gnome.org/easytag"
+                }
+            ]
+        }
+    ]
+}
